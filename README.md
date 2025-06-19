@@ -123,7 +123,7 @@ This plugin has been tested with the following software versions. Other versions
 - [McNeel Rhino](https://www.rhino3d.com/) - Version 8
 - [Rhino.Inside.Revit](https://www.rhino3d.com/inside/revit/) - Version 1.31
 - [Grasshopper](https://www.grasshopper3d.com/) with the following plugins:
-  - [Imaging Library by David Rutten (v1.0.4)]()
+  - Imaging Library by David Rutten (v1.0.4) - via YAK Packagemanager
   - [Pufferfish by Michael Pryor (v3.0.0)](https://www.food4rhino.com/en/app/pufferfish)
   - [MeshEdit by [uto] (v2.0.0)](https://www.food4rhino.com/en/app/meshedit)
 
@@ -198,7 +198,7 @@ To ensure accurate daylight results, certain conditions must be met within the R
 - Revit must be opened in **English localisation**
 - Correct categorization of interior and exterior building parts
 
-Also, limitations apply to group handling and bounding box approximations.
+Some limitations apply to group handling and bounding box approximations.
 
 For a full list of requirements and current limitations, see the [Model Setup & Known Issues](./docs/model_requirements.md)
 
@@ -259,7 +259,7 @@ Project Repository: [github.com/upskiller-xyz/BelysningsStiftelsen_Daylightfacto
 Special thanks to the following people and tools that supported this project:
 
 * [Belysningsstiftelsen](https://belysningsstiftelsen.se/) – for funding and support
-* [Best-README-Template](https://github.com/othneildrew/Best-README-Template) – for the excellent README structure
+* [Best-README-Template](https://github.com/othneildrew/Best-README-Template) – for the README structure
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
