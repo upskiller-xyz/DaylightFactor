@@ -25,33 +25,34 @@
 [![Unlicense License][license-shield]][license-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
 
-
+Size of Dataset?
+Imaging Libary needs to be installed? >YAK
+License
 
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/othneildrew/Best-README-Template">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
+  <a href="./docs/images/logo_upskiller.png">
+    <img src="./docs/images/logo_upskiller.png" alt="Logo" height="100">
   </a>
 
   <h3 align="center">BelysningsStiftelsen_Daylightfactor</h3>
 
   <p align="center">
-    An awesome README template to jumpstart your projects!
+    ML-powered Revit plugin for fast, room-based daylight factor insights
     <br />
-    <a href="https://github.com/othneildrew/Best-README-Template"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/upskiller-xyz/BelysningsStiftelsen_Daylightfactor/wiki"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/othneildrew/Best-README-Template">View Demo</a>
+    <a href="">View Demo</a>
     &middot;
-    <a href="https://github.com/othneildrew/Best-README-Template/issues/new?labels=bug&template=bug-report---.md">Report Bug</a>
+    <a href="https://github.com/upskiller-xyz/BelysningsStiftelsen_Daylightfactor/issues/new?labels=bug">Report Bug</a>
     &middot;
-    <a href="https://github.com/othneildrew/Best-README-Template/issues/new?labels=enhancement&template=feature-request---.md">Request Feature</a>
+    <a href="https://github.com/upskiller-xyz/BelysningsStiftelsen_Daylightfactor/issues/new?labels=enhancement">Request Feature</a>
   </p>
 </div>
 
-Size of Dataset?
-Imaging Libary needs to be installed? >YAK
+
 
 
 <!-- TABLE OF CONTENTS -->
@@ -72,7 +73,7 @@ Imaging Libary needs to be installed? >YAK
       </ul>
     </li>
     <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
+    <li><a href="#model-requirements--limitations">Model Requirements & Limitations</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
@@ -81,14 +82,16 @@ Imaging Libary needs to be installed? >YAK
 </details>
 
 
-<<<<<<< Updated upstream
-Contact
-=======
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+<p align="center">
+  <a href="./docs/images/heatmap_in_3d.png" target="_blank" title="Click to enlarge">
+    <img src="./docs/images/heatmap_in_3d.png" alt="Revit Integration Steps" width="600"/>
+  </a>
+</p>
+
 
 This project was funded by [**Belysnings Stiftelsen**](https://belysningsstiftelsen.se/) and provides a practical solution for performing daylight analysis directly within Autodesk Revit. The plugin enables architects and planners to quickly assess whether a design meets daylight compliance requirements based on the **Daylight Factor** method as defined in **SS-EN 17037**. Unlike traditional simulation-based tools, this plugin leverages **machine learning** to deliver near-instant daylight insights with minimal setup, making it ideal for early-phase design evaluation.
 
@@ -126,33 +129,36 @@ This plugin has been tested with the following software versions. Other versions
 
 ### Installation
 
-#### 1. Integration in Revit
+<details>
+  <summary><strong> 1. Plugin Installation in Revit</strong></summary>
 
-Follow these steps to integrate the plugin into Revit via Rhino.Inside. Once completed, the plugin tools will appear as buttons within the **Rhino.Inside** tab in the Revit ribbon.
+  <br>
+  Follow these steps to integrate the plugin into Revit via Rhino.Inside. Once completed, the plugin tools will appear as buttons within the **Rhino.Inside** tab in the Revit ribbon.
 
-*  **Download or clone** this repository
+  *  **Download or clone** this repository  
+  <sub>`git clone https://github.com/upskiller-xyz/BelysningsStiftelsen_Daylightfactor.git`</sub>
+  * Open **Autodesk Revit** and switch to the **Rhino.Inside** tab
+  * Expand the **More** dropdown (marked as [1] in the image below)
+  * Select **Options** from the list ([2])
+  * In the new dialog, switch to the **Scripts** tab ([3])
+  * Click **Add Script Location** ([4]) and select the `revit_plugin` folder from the downloaded repository
+  * Confirm with **OK** – the plugin buttons should now appear inside the **Rhino.Inside** ribbon
 
-   ```sh
-   git clone https://github.com/github_username/repo_name.git
-   ```
-* Open **Autodesk Revit** and switch to the **Rhino.Inside** tab
-* Expand the **More** dropdown (marked as [1] in the image below)
-* Select **Options** from the list ([2])
-* In the new dialog, switch to the **Scripts** tab ([3])
-* Click **Add Script Location** ([4]) and select the `revit_plugin` folder from the downloaded repository
-* Confirm with **OK** – the plugin buttons should now appear inside the **Rhino.Inside** ribbon
+  <p align="center">
+    <a href="./docs/images//revit_plugin_setup.png" target="_blank" title="Click to enlarge">
+      <img src="./docs/images//revit_plugin_setup.png" alt="Revit Integration Steps" width="700"/>
+    </a>
+  </p>
 
-<p align="center">
-  <a href="./docs/images//revit_plugin_setup.png" target="_blank" title="Click to enlarge">
-    <img src="./docs/images//revit_plugin_setup.png" alt="Revit Integration Steps" width="700"/>
-  </a>
-</p>
+  <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+</details>
 
-#### 2. Setup of local server
+<details>
+  <summary><strong> 2. Setup of local server </strong></summary>
+  TBD
+</details>
 
-TBD
 
 <!-- USAGE EXAMPLES -->
 ## Usage
@@ -230,31 +236,46 @@ TBD
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-
-
+ 
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [@your_twitter](https://twitter.com/your_username) - email@example.com
+For questions, collaboration inquiries or feedback, feel free to reach out:
 
-Project Link: [https://github.com/your_username/repo_name](https://github.com/your_username/repo_name)
+Alejandro Pachecho - Project Lead: [alejandro.pacheco@upskiller.xyz](mailto:alejandro.pacheco@upskiller.xyz)  
+Christoph Berkmiller - BIM & Integration: [christoph.berkmiller@upskiller.xyz](christoph.berkmiller@upskiller.xyz)  
+Libny Pacheco - BIM & Integration: [libny.pacheco@upskiller.xyz](libny.pacheco@upskiller.xyz)  
+Stasja Fedorova – Machine Learning & Backend: [stasja.fedorova@upskiller.xyz](stasja.fedorova@upskiller.xyz)  
+
+Project Repository: [github.com/upskiller-xyz/BelysningsStiftelsen_Daylightfactor](https://github.com/upskiller-xyz/BelysningsStiftelsen_Daylightfactor)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
+
+<!-- ACKNOWLEDGMENTS -->
+## Acknowledgments
+
+Special thanks to the following people and tools that supported this project:
+
+* [Belysningsstiftelsen](https://belysningsstiftelsen.se/) – for funding and support
+* [Best-README-Template](https://github.com/othneildrew/Best-README-Template) – for the excellent README structure
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/othneildrew/Best-README-Template.svg?style=for-the-badge
-[contributors-url]: https://github.com/othneildrew/Best-README-Template/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/othneildrew/Best-README-Template.svg?style=for-the-badge
-[forks-url]: https://github.com/othneildrew/Best-README-Template/network/members
-[stars-shield]: https://img.shields.io/github/stars/othneildrew/Best-README-Template.svg?style=for-the-badge
-[stars-url]: https://github.com/othneildrew/Best-README-Template/stargazers
-[issues-shield]: https://img.shields.io/github/issues/othneildrew/Best-README-Template.svg?style=for-the-badge
-[issues-url]: https://github.com/othneildrew/Best-README-Template/issues
-[license-shield]: https://img.shields.io/github/license/othneildrew/Best-README-Template.svg?style=for-the-badge
-[license-url]: https://github.com/othneildrew/Best-README-Template/blob/master/LICENSE.txt
+[contributors-shield]: https://img.shields.io/github/contributors/upskiller-xyz/BelysningsStiftelsen_Daylightfactor.svg?style=for-the-badge
+[contributors-url]: https://github.com/upskiller-xyz/BelysningsStiftelsen_Daylightfactor/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/upskiller-xyz/BelysningsStiftelsen_Daylightfactor.svg?style=for-the-badge
+[forks-url]: https://github.com/upskiller-xyz/BelysningsStiftelsen_Daylightfactor/network/members
+[stars-shield]: https://img.shields.io/github/stars/upskiller-xyz/BelysningsStiftelsen_Daylightfactor.svg?style=for-the-badge
+[stars-url]: https://github.com/upskiller-xyz/BelysningsStiftelsen_Daylightfactor/stargazers
+[issues-shield]: https://img.shields.io/github/issues/upskiller-xyz/BelysningsStiftelsen_Daylightfactor.svg?style=for-the-badge
+[issues-url]: https://github.com/upskiller-xyz/BelysningsStiftelsen_Daylightfactor/issues
+[license-shield]: https://img.shields.io/github/license/upskiller-xyz/BelysningsStiftelsen_Daylightfactor.svg?style=for-the-badge
+[license-url]: https://github.com/upskiller-xyz/BelysningsStiftelsen_Daylightfactor/blob/main/LICENSE
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-[linkedin-url]: https://linkedin.com/in/othneildrew
-[product-screenshot]: images/screenshot.png
->>>>>>> Stashed changes
+[linkedin-url]: https://www.linkedin.com/company/upskiller-xyz
