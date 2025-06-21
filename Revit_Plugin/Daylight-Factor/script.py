@@ -11,10 +11,6 @@ import codecs # Required for file open() with encoding in Python 2.x
 # --- Conversion of Revit-internal feet units to millimetres ---
 import clr
 clr.AddReference("RevitAPI")
-clr.AddReference("PresentationFramework")
-clr.AddReference("PresentationCore")
-clr.AddReference("WindowsBase")
-clr.AddReference("System.Xaml")
 from Autodesk.Revit.DB import UnitUtils
 
 # Try the modern API first (Revit 2021+)
@@ -29,12 +25,10 @@ def feet_to_mm(value_ft):
     """Convert Revit-internal feet to millimetres."""
     return UnitUtils.ConvertFromInternalUnits(value_ft, MM)
 
+# --- PyRevit Imports ---
+from pyrevit import forms
+from pyrevit import revit
 from Autodesk.Revit.DB import FilteredElementCollector, Level
-
-# --- WPF Imports ---
-from System.Windows import MessageBox
-from System.Windows.Markup import XamlReader
-from System.IO import FileStream, FileMode
 
 # --- Constants ---
 SETTINGS_FILENAME = "settings_daylight.json"
@@ -57,6 +51,7 @@ try:
 
     # Full path to the settings file
     settings_file_path = os.path.join(target_dir, SETTINGS_FILENAME)
+
 except NameError:
     # Fallback if __file__ is not defined (e.g., interactive console)
     print("WARNING: Could not determine script path. Using current working directory for XAML and settings.")
@@ -64,121 +59,143 @@ except NameError:
     xaml_file_path = os.path.join(script_dir, XAML_FILENAME)
     settings_file_path = os.path.join(script_dir, SETTINGS_FILENAME)
 
-# --- Helper: Get Revit Document ---
-def get_revit_doc():
-    # For IronPython in Revit, __revit__ may be available, otherwise use __context__ or UIApplication
-    try:
-        return __revit__.ActiveUIDocument.Document
-    except:
-        try:
-            return __context__.ActiveUIDocument.Document
-        except:
-            # Fallback: try global variable 'doc'
-            global doc
-            return doc
-
-# --- Helper: Show Alert ---
-def show_alert(message, title="Alert"):
-    MessageBox.Show(message, title)
-
 # --- Main Window Class ---
-class SettingsWindow(object):
+class SettingsWindow(forms.WPFWindow):
     """
     Settings window for Daylight Prediction.
     Loads layout from XAML and handles loading/saving settings.
     Uses os.path and codecs.open for Python 2.x compatibility.
     """
     def __init__(self, xaml_source):
-        # Load the XAML file
-        with FileStream(xaml_source, FileMode.Open) as fs:
-            self.window = XamlReader.Load(fs)
-        self._wire_events()
+        """
+        Initializes the window by loading XAML and initial settings.
+
+        Args:
+            xaml_source (str): Path to the XAML file.
+        """
+        # Load the XAML file. Controls with x:Name become attributes (e.g., self.SaveButton)
+        forms.WPFWindow.__init__(self, xaml_source)
+        # Load existing settings into the UI controls
         self._load_settings()
 
-    def _wire_events(self):
-        # Wire up SaveButton click event
-        self.window.SaveButton.Click += self.save_button_click
-
     def _load_settings(self):
+        """Loads settings from the JSON file and updates UI elements."""
         try:
-            doc = get_revit_doc()
+            # --- Populate levels from Revit model ---
+            doc = revit.doc
             self.levels = [lvl for lvl in FilteredElementCollector(doc).OfClass(Level)]
-            self.window.ComboBoxLevels.ItemsSource = self.levels
+            self.ComboBoxLevels.ItemsSource = self.levels
 
+            # Default: select first level
             selected_level_id = None
             if os.path.isfile(settings_file_path):
+                # print("Loading settings from: {}".format(settings_file_path))  # Comment out this line to avoid printing or showing this terminal output message to the user
+                # Use codecs.open for Python 2 compatibility with encoding
                 with codecs.open(settings_file_path, 'r', encoding='utf-8') as f:
                     data = json.load(f)
-                is_multilayer = bool(data.get('multilayer_wall', False))
-                transmission_val = str(data.get('transmission_value', 70))
+
+                # Get values, providing defaults if keys are missing
+                is_multilayer = bool(data.get('multilayer_wall', False)) # Default: False
+                transmission_val = str(data.get('transmission_value', 70)) # Default: 70
                 level_elevation = data.get('level_elevation', None)
+                # Try to select the saved elevation
                 if level_elevation is not None:
                     for lvl in self.levels:
                         if abs(lvl.Elevation - float(level_elevation)) < 0.001:
-                            self.window.ComboBoxLevels.SelectedItem = lvl
+                            self.ComboBoxLevels.SelectedItem = lvl
                             break
                 else:
-                    self.window.ComboBoxLevels.SelectedIndex = 0
+                    self.ComboBoxLevels.SelectedIndex = 0
             else:
+                print("Settings file not found. Using default values.")
                 is_multilayer = False
                 transmission_val = "70"
-                self.window.ComboBoxLevels.SelectedIndex = 0
+                self.ComboBoxLevels.SelectedIndex = 0
 
-            self.window.RadioButtonTrue.IsChecked = is_multilayer
-            self.window.RadioButtonFalse.IsChecked = not is_multilayer
-            self.window.TextBoxTransmission.Text = transmission_val
+            # Update UI controls based on loaded data
+            self.RadioButtonTrue.IsChecked = is_multilayer
+            self.RadioButtonFalse.IsChecked = not is_multilayer
+            self.TextBoxTransmission.Text = transmission_val
 
         except Exception as e:
-            show_alert("Error loading settings file or levels.\nDefaults will be used.", title="Load Error")
-            self.window.RadioButtonFalse.IsChecked = True
-            self.window.RadioButtonTrue.IsChecked = False
-            self.window.TextBoxTransmission.Text = "70"
-            if hasattr(self.window, 'ComboBoxLevels'):
-                self.window.ComboBoxLevels.SelectedIndex = 0
+            print("ERROR loading settings: {}".format(e))
+            forms.alert("Error loading settings file or levels.\nDefaults will be used.", title="Load Error")
+            # Set default UI values on error
+            self.RadioButtonFalse.IsChecked = True
+            self.RadioButtonTrue.IsChecked = False
+            self.TextBoxTransmission.Text = "70"
+            if hasattr(self, 'ComboBoxLevels'):
+                self.ComboBoxLevels.SelectedIndex = 0
 
     def save_button_click(self, sender, args):
-        is_multilayer = self.window.RadioButtonTrue.IsChecked
-        transmission_str = self.window.TextBoxTransmission.Text
+        """
+        Handles the click event for the 'SaveButton' defined in XAML.
+        Validates input, saves data to JSON, and closes the window.
+        """
+        # 1. Read current values from UI controls
+        is_multilayer = self.RadioButtonTrue.IsChecked
+        transmission_str = self.TextBoxTransmission.Text
 
+        # 2. Validate the transmission value input
         try:
             transmission_value = int(transmission_str)
             if not (0 <= transmission_value <= 100):
-                raise ValueError("Value must be between 0 and 100.")
+                 raise ValueError("Value must be between 0 and 100.")
         except ValueError as e:
-            show_alert("Invalid Transmission Value: '{}'.\nPlease enter an integer between 0 and 100.\n({})".format(transmission_str, e),
-                       title="Invalid Input")
-            return
+            forms.alert("Invalid Transmission Value: '{}'.\nPlease enter an integer between 0 and 100.\n({})".format(transmission_str, e),
+                        title="Invalid Input", warn_icon=True)
+            return # Stop saving process
 
-        selected_level = self.window.ComboBoxLevels.SelectedItem
+        # --- Get selected level and its elevation ---
+        selected_level = self.ComboBoxLevels.SelectedItem
         if selected_level is not None:
             level_elevation = selected_level.Elevation
         else:
-            show_alert("Please select a ground floor level.", title="Missing Level")
+            forms.alert("Please select a ground floor level.", title="Missing Level", warn_icon=True)
             return
 
+        # 3. Prepare data dictionary
         settings_data = {
             'multilayer_wall': is_multilayer,
             'transmission_value': transmission_value,
-            'level_elevation': int(round(feet_to_mm(level_elevation)))
+            'level_elevation': int(round(feet_to_mm(level_elevation)))  # Use Revit API conversion
         }
 
+        # 4. Write data to JSON file
         try:
+            # Ensure target directory exists (manual check for Python < 3.2)
             settings_dir = os.path.dirname(settings_file_path)
             if not os.path.isdir(settings_dir):
-                os.makedirs(settings_dir)
-            with codecs.open(settings_file_path, 'w', encoding='utf-8') as f:
-                json.dump(settings_data, f, indent=4, sort_keys=True)
-            self.window.Close()
-        except Exception as e:
-            show_alert("Failed to save settings:\n{}".format(e), title="Save Error")
+                print("Creating directory: {}".format(settings_dir))
+                try:
+                    # Create directory (no exist_ok argument)
+                    os.makedirs(settings_dir)
+                except OSError as e:
+                    print("ERROR creating directory: {}".format(e))
+                    forms.alert("Failed to create settings directory:\n{}".format(e), title="Directory Error", warn_icon=True)
+                    return # Stop saving process
 
-    def show_dialog(self):
-        self.window.ShowDialog()
+            # Write the file using codecs.open for Python 2 encoding compatibility
+            with codecs.open(settings_file_path, 'w', encoding='utf-8') as f:
+                json.dump(settings_data, f, indent=4, sort_keys=True) # sort_keys for consistent output
+
+            #print("Settings saved successfully to: {}".format(settings_file_path))  # Comment out this line to avoid printing or showing this terminal output message to the user
+            self.Close() # Close the window upon successful save
+
+        except Exception as e:
+            # Handle potential errors during file writing
+            print("ERROR saving settings: {}".format(e))
+            forms.alert("Failed to save settings:\n{}".format(e), title="Save Error", warn_icon=True)
 
 # --- Script Execution ---
 if __name__ == '__main__':
+    # Verify the XAML file exists before trying to load it
     if not os.path.isfile(xaml_file_path):
-        show_alert("Error: UI definition file not found:\n{}".format(xaml_file_path), title="UI File Error")
+        forms.alert("Error: UI definition file not found:\n{}".format(xaml_file_path), title="UI File Error", exitscript=True)
     else:
+        # Create an instance of the settings window
         settings_window = SettingsWindow(xaml_file_path)
+        # Show the window as a modal dialog (waits until closed)
         settings_window.show_dialog()
+        # Optional: Code here runs after the dialog is closed
+        # print("Settings window closed.") # Comment out this line to avoid printing or showing this terminal output message to the user
