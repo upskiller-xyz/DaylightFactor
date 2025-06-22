@@ -25,10 +25,6 @@
 [![Unlicense License][license-shield]][license-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
 
-Size of Dataset?
-Imaging Libary needs to be installed? >YAK
-License
-
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
@@ -36,19 +32,19 @@ License
     <img src="./docs/images/logo_upskiller.png" alt="Logo" height="100">
   </a>
 
-  <h3 align="center">BelysningsStiftelsen_Daylightfactor</h3>
+  <h3 align="center">Daylight-Factor</h3>
 
   <p align="center">
     ML-powered Revit plugin for fast, room-based daylight factor insights
     <br />
-    <a href="https://github.com/upskiller-xyz/BelysningsStiftelsen_Daylightfactor/wiki"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/upskiller-xyz/Daylight-Factor/wiki"><strong>Explore the docs »</strong></a>
     <br />
     <br />
     <a href="">View Demo</a>
     &middot;
-    <a href="https://github.com/upskiller-xyz/BelysningsStiftelsen_Daylightfactor/issues/new?labels=bug">Report Bug</a>
+    <a href="https://github.com/upskiller-xyz/Daylight-Factor/issues/new?labels=bug">Report Bug</a>
     &middot;
-    <a href="https://github.com/upskiller-xyz/BelysningsStiftelsen_Daylightfactor/issues/new?labels=enhancement">Request Feature</a>
+    <a href="https://github.com/upskiller-xyz/Daylight-Factor/issues/new?labels=enhancement">Request Feature</a>
   </p>
 </div>
 
@@ -182,7 +178,7 @@ Select a room in Revit and run the daylight analysis.
 A heatmap and metrics (e.g., daylight factor) are generated directly in Revit.  
 Previous results are overwritten with each new analysis.
 
-For a detailed explanation of each setting, see the [Usage Guide](https://github.com/yourname/yourrepo/wiki/Usage).
+For a detailed explanation of each setting, see the [Usage Guide](https://github.com/upskiller-xyz/Daylight-Factor/wiki/Usage-of-the-Daylight-Factor-Plugin).
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -200,7 +196,7 @@ To ensure accurate daylight results, certain conditions must be met within the R
 
 Some limitations apply to group handling and bounding box approximations.
 
-For a full list of requirements and current limitations, see the [Documentaion](https://github.com/upskiller-xyz/BelysningsStiftelsen_Daylightfactor/wiki/Model-Requirements-&-Limitations)
+For a full list of requirements and current limitations, see the [Documentaion](https://github.com/upskiller-xyz/Daylight-Factor/wiki/Model-Requirements-&-Limitations)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -221,8 +217,8 @@ If you have a suggestion that would make this better, please fork the repo and c
 
 ### Top contributors:
 
-<a href="https://github.com/upskiller-xyz/BelysningsStiftelsen_Daylightfactor/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=upskiller-xyz/BelysningsStiftelsen_Daylightfactor" alt="Top Contributors" />
+<a href="https://github.com/upskiller-xyz/Daylight-Factor/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=upskiller-xyz/Daylight-Factor" alt="Top Contributors" />
 </a>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -232,7 +228,7 @@ If you have a suggestion that would make this better, please fork the repo and c
 <!-- LICENSE -->
 ## License
 
-TBD
+Distributed under the MIT License.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -247,7 +243,7 @@ Christoph Berkmiller - BIM & Integration: [christoph.berkmiller@upskiller.xyz](c
 Libny Pacheco - BIM & Integration: [libny.pacheco@upskiller.xyz](libny.pacheco@upskiller.xyz)  
 Stasja Fedorova – Machine Learning & Backend: [stasja.fedorova@upskiller.xyz](stasja.fedorova@upskiller.xyz)  
 
-Project Repository: [github.com/upskiller-xyz/BelysningsStiftelsen_Daylightfactor](https://github.com/upskiller-xyz/BelysningsStiftelsen_Daylightfactor)
+Project Repository: [github.com/upskiller-xyz/BelysningsStiftelsen_Daylightfactor](https://github.com/upskiller-xyz/Daylight-Factor)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -259,6 +255,7 @@ Project Repository: [github.com/upskiller-xyz/BelysningsStiftelsen_Daylightfacto
 Special thanks to the following people and tools that supported this project:
 
 * [Belysningsstiftelsen](https://belysningsstiftelsen.se/) – for funding and support
+* [IAAC](https://iaac.net/) - where we met and many of the core ideas were shaped
 * [Best-README-Template](https://github.com/othneildrew/Best-README-Template) – for the README structure
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
