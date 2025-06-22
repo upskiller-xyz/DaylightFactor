@@ -200,7 +200,7 @@ To ensure accurate daylight results, certain conditions must be met within the R
 
 Some limitations apply to group handling and bounding box approximations.
 
-For a full list of requirements and current limitations, see the [Model Setup & Known Issues](./docs/model_requirements.md)
+For a full list of requirements and current limitations, see the [Documentaion](https://github.com/upskiller-xyz/BelysningsStiftelsen_Daylightfactor/wiki/Model-Requirements-&-Limitations)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
