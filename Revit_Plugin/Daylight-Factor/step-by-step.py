@@ -100,6 +100,8 @@ class SettingsWindow(Window):
         Window.__init__(self)
         self.Content = window.Content
         self.Title = window.Title
+        self.Width = window.Width
+        self.Height = window.Height
 
         # Use recursive search for controls
         self.SaveButton = self._find_child_by_name(self.Content, "SaveButton")

@@ -1,5 +1,5 @@
 {
     "level_elevation": 0,
-    "multilayer_wall": true,
-    "transmission_value": 61
+    "multilayer_wall": false,
+    "transmission_value": 11
 }
