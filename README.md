@@ -32,19 +32,19 @@
     <img src="./docs/images/logo_upskiller.png" alt="Logo" height="100">
   </a>
 
-  <h3 align="center">Daylight-Factor</h3>
+  <h3 align="center">DaylightFactor</h3>
 
   <p align="center">
     ML-powered Revit plugin for fast, room-based daylight factor insights
     <br />
-    <a href="https://github.com/upskiller-xyz/Daylight-Factor/wiki"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/upskiller-xyz/DaylightFactor/wiki"><strong>Explore the docs »</strong></a>
     <br />
     <br />
     <a href="">View Demo</a>
     &middot;
-    <a href="https://github.com/upskiller-xyz/Daylight-Factor/issues/new?labels=bug">Report Bug</a>
+    <a href="https://github.com/upskiller-xyz/DaylightFactor/issues/new?labels=bug">Report Bug</a>
     &middot;
-    <a href="https://github.com/upskiller-xyz/Daylight-Factor/issues/new?labels=enhancement">Request Feature</a>
+    <a href="https://github.com/upskiller-xyz/DaylightFactor/issues/new?labels=enhancement">Request Feature</a>
   </p>
 </div>
 
@@ -89,11 +89,14 @@
 </p>
 
 
-This project was funded by [**Belysnings Stiftelsen**](https://belysningsstiftelsen.se/) and provides a practical solution for performing daylight analysis directly within Autodesk Revit. The plugin enables architects and planners to quickly assess whether a design meets daylight compliance requirements based on the **Daylight Factor** method as defined in **SS-EN 17037**. Unlike traditional simulation-based tools, this plugin leverages **machine learning** to deliver near-instant daylight insights with minimal setup, making it ideal for early-phase design evaluation.
+This project provides a practical solution for performing daylight analysis directly within [Autodesk Revit](https://www.autodesk.com/se/products/revit/overview). The plugin enables architects and planners to quickly assess whether a design meets daylight compliance requirements based on the [Daylight Factor](https://climatestudiodocs.com/docs/daylightFactor.html) method as defined in [SS-EN 17037](https://www.sis.se/produkter/byggnadsprojektering/byggnadsutformning/SS-EN-170372018A120212/). Unlike traditional simulation-based tools, this plugin leverages **machine learning algorithms** to deliver near-instant daylight insights with minimal setup, making it ideal for early-phase design evaluation.
 
-How it works:  
-The plugin uses **Rhino.Inside.Revit** to extract room geometries and generates a simplified representation. This data is then sent to a machine learning model that has been trained on over **12,000 daylight simulation scenarios** with varying geometries. Currently, analysis is performed on a **room-by-room basis**, allowing users to target individual spaces for compliance checking
-(ML analysis runs on a local server, which you need to set up once). The resulting **heatmap** and derived metrics are visualized directly within Revit. 
+Daylight Factor project was funded by [**Belysningsstiftelsen**](https://belysningsstiftelsen.se/).
+
+
+### How it works - Overview  
+The plugin uses [Rhino.Inside.Revit](https://www.rhino3d.com/inside/revit/) to extract room geometries and generates a simplified representation. This data is then sent to a machine learning model that has been trained on over **12,000 daylight simulation scenarios** in Stockholm with varying geometries. Currently, analysis is performed on a **room-by-room basis**, allowing users to target individual spaces for compliance checking
+(ML analysis runs on a local server, which you need to [set up](https://github.com/upskiller-xyz/server/blob/master/README.md#locally) once). The resulting **heatmap** and derived metrics are visualized directly within Revit. 
 
 ### Built With
 
@@ -132,7 +135,13 @@ This plugin has been tested with the following software versions. Other versions
   Follow these steps to integrate the plugin into Revit via Rhino.Inside. Once completed, the plugin tools will appear as buttons within the **Rhino.Inside** tab in the Revit ribbon.
 
   *  **Download or clone** this repository  
-  <sub>`git clone https://github.com/upskiller-xyz/BelysningsStiftelsen_Daylightfactor.git`</sub>
+  <sub>`git clone https://github.com/upskiller-xyz/Daylightfactor.git`</sub>
+  * Install dependencies by running 
+
+  ```sh
+  pip install -r requirements.txt
+  ```
+  * _Optional_: if using local server for daylight factor estimation follow [these instructions](https://github.com/upskiller-xyz/server/blob/master/README.md#locally). The server code should have been installed in the previous step in `/server`
   * Open **Autodesk Revit** and switch to the **Rhino.Inside** tab
   * Expand the **More** dropdown (marked as [1] in the image below)
   * Select **Options** from the list ([2])
@@ -178,7 +187,7 @@ Select a room in Revit and run the daylight analysis.
 A heatmap and metrics (e.g., daylight factor) are generated directly in Revit.  
 Previous results are overwritten with each new analysis.
 
-For a detailed explanation of each setting, see the [Usage Guide](https://github.com/upskiller-xyz/Daylight-Factor/wiki/Usage-of-the-Daylight-Factor-Plugin).
+For a detailed explanation of each setting, see the [Usage Guide](https://github.com/upskiller-xyz/DaylightFactor/wiki/Usage-of-the-DaylightFactor-Plugin).
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -196,7 +205,7 @@ To ensure accurate daylight results, certain conditions must be met within the R
 
 Some limitations apply to group handling and bounding box approximations.
 
-For a full list of requirements and current limitations, see the [Documentaion](https://github.com/upskiller-xyz/Daylight-Factor/wiki/Model-Requirements-&-Limitations)
+For a full list of requirements and current limitations, see the [Documentaion](https://github.com/upskiller-xyz/DaylightFactor/wiki/Model-Requirements-&-Limitations)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -205,8 +214,7 @@ For a full list of requirements and current limitations, see the [Documentaion](
 <!-- CONTRIBUTING -->
 ## Contributing
 
-Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
-
+Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**. 
 If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
 
 1. Fork the Project
@@ -215,10 +223,13 @@ If you have a suggestion that would make this better, please fork the repo and c
 4. Push to the Branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
+By contributing you are agreeing to [contribution terms](/docs/CLA.md). See [Contribution](./docs/CONTRIBUTING.md) for more details on contribution.
+
+
 ### Top contributors:
 
-<a href="https://github.com/upskiller-xyz/Daylight-Factor/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=upskiller-xyz/Daylight-Factor" alt="Top Contributors" />
+<a href="https://github.com/upskiller-xyz/DaylightFactor/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=upskiller-xyz/DaylightFactor" alt="Top Contributors" />
 </a>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -239,11 +250,12 @@ Distributed under the MIT License.
 For questions, collaboration inquiries or feedback, feel free to reach out:
 
 Alejandro Pachecho - Project Lead: [alejandro.pacheco@upskiller.xyz](mailto:alejandro.pacheco@upskiller.xyz)  
+Stasja Fedorova – Machine Learning & Backend: [stasja.fedorova@upskiller.xyz](stasja.fedorova@upskiller.xyz)  
 Christoph Berkmiller - BIM & Integration: [christoph.berkmiller@upskiller.xyz](christoph.berkmiller@upskiller.xyz)  
 Libny Pacheco - BIM & Integration: [libny.pacheco@upskiller.xyz](libny.pacheco@upskiller.xyz)  
-Stasja Fedorova – Machine Learning & Backend: [stasja.fedorova@upskiller.xyz](stasja.fedorova@upskiller.xyz)  
 
-Project Repository: [github.com/upskiller-xyz/BelysningsStiftelsen_Daylightfactor](https://github.com/upskiller-xyz/Daylight-Factor)
+
+Project Repository: [github.com/upskiller-xyz/Daylightfactor](https://github.com/upskiller-xyz/DaylightFactor)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -254,9 +266,10 @@ Project Repository: [github.com/upskiller-xyz/BelysningsStiftelsen_Daylightfacto
 
 Special thanks to the following people and tools that supported this project:
 
-* [Belysningsstiftelsen](https://belysningsstiftelsen.se/) – for funding and support
-* [IAAC](https://iaac.net/) - where we met and many of the core ideas were shaped
 * [Best-README-Template](https://github.com/othneildrew/Best-README-Template) – for the README structure
+* [Belysningsstiftelsen](https://belysningsstiftelsen.se/) – for funding and support
+* [IAAC](https://iaac.net/) - for providing the ground for preliminary study of daylight factor in architectural context.
+* Hande Karataş, Dawid Drożdż, Angelos Chronis, Gabriella Rossi, Vasiliki Fragkia, Marie-Claude Dubois - for contributing with their knowledge to the preliminary study and exploration phase.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
