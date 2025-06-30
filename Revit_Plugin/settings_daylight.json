@@ -1,5 +1,7 @@
 {
-    "level_elevation": 4410, 
-    "multilayer_wall": true, 
-    "transmission_value": 60
+    "execution_mode": "web",
+    "level_elevation": 0,
+    "multilayer_wall": true,
+    "transmission_value": 60,
+    "write_results": true
 }

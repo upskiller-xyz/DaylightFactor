@@ -109,10 +109,17 @@ class SettingsWindow(Window):
         self.RadioButtonTrue = self._find_child_by_name(self.Content, "RadioButtonTrue")
         self.RadioButtonFalse = self._find_child_by_name(self.Content, "RadioButtonFalse")
         self.TextBoxTransmission = self._find_child_by_name(self.Content, "TextBoxTransmission")
+        self.HelpButton = self._find_child_by_name(self.Content, "HelpButton")
+        self.ComboBoxExecutionMode = self._find_child_by_name(self.Content, "ComboBoxExecutionMode")
+        self.RadioWriteYes = self._find_child_by_name(self.Content, "RadioWriteYes")
+        self.RadioWriteNo = self._find_child_by_name(self.Content, "RadioWriteNo")
 
         # Attach event handler
         if self.SaveButton:
             self.SaveButton.Click += self.save_button_click
+
+        if self.HelpButton:
+            self.HelpButton.Click += self.help_button_click
 
         self.revit_doc = revit_doc
         self._load_settings()
@@ -132,6 +139,13 @@ class SettingsWindow(Window):
                 is_multilayer = bool(data.get('multilayer_wall', False))
                 transmission_val = str(data.get('transmission_value', 70))
                 level_elevation = data.get('level_elevation', None)
+
+                exec_mode = data.get('execution_mode', 'web')
+                write_results  = bool(data.get('write_results', True))
+                self.ComboBoxExecutionMode.SelectedIndex = 1 if exec_mode == 'local' else 0
+                self.RadioWriteYes.IsChecked = write_results
+                self.RadioWriteNo.IsChecked  = not write_results
+
                 if level_elevation is not None:
                     for lvl in self.levels:
                         if abs(lvl.Elevation - float(level_elevation)) < 0.001:
@@ -145,6 +159,11 @@ class SettingsWindow(Window):
                 is_multilayer = False
                 transmission_val = "70"
                 self.ComboBoxLevels.SelectedIndex = 0
+                exec_mode = 'web'
+                write_results = True
+                self.ComboBoxExecutionMode.SelectedIndex = 0
+                self.RadioWriteYes.IsChecked = True
+                self.RadioWriteNo.IsChecked  = False
 
             self.RadioButtonTrue.IsChecked = is_multilayer
             self.RadioButtonFalse.IsChecked = not is_multilayer
@@ -169,6 +188,10 @@ class SettingsWindow(Window):
             # 1. Read current values from UI controls
             is_multilayer = self.RadioButtonTrue.IsChecked
             transmission_str = self.TextBoxTransmission.Text
+            exec_mode = 'local' if self.ComboBoxExecutionMode.SelectedIndex == 1 else 'web' # Execution mode (index 0 = web, 1 = local)
+            write_results = self.RadioWriteYes.IsChecked # Write results radio buttons
+
+
             print("Transmission input:", transmission_str)
 
             # 2. Validate the transmission value input
@@ -193,7 +216,9 @@ class SettingsWindow(Window):
             settings_data = {
                 'multilayer_wall': is_multilayer,
                 'transmission_value': transmission_value,
-                'level_elevation': int(round(feet_to_mm(level_elevation)))  # Use Revit API conversion
+                'level_elevation': int(round(feet_to_mm(level_elevation))),  # Use Revit API conversion
+                'execution_mode': exec_mode,
+                'write_results': write_results
             }
             print("Settings to save:", settings_data)
             print("Saving to:", settings_file_path)
@@ -225,6 +250,19 @@ class SettingsWindow(Window):
         except Exception as e:
             print("ERROR in save_button_click:", e)
             MessageBox.Show("Unexpected error in save_button_click:\n{}".format(e), "Save Error")
+
+    def help_button_click(self, sender, args):
+        """
+        Handles the click event for the 'HelpButton' defined in XAML.
+        Redirects to the documentation on Github.
+        """
+        import System.Diagnostics as diag
+
+        psi = diag.ProcessStartInfo()
+        psi.FileName = ("https://github.com/upskiller-xyz/DaylightFactor/wiki/""Usage-of-the-Daylight-Factor-Plugin")
+        psi.UseShellExecute = True
+
+        diag.Process.Start(psi)
 
 
 # --- Script Execution ---
