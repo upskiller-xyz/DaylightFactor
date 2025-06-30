@@ -1,0 +1,69 @@
+<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Settings Daylight Prediction"
+        Width="400" Height="200"
+        ResizeMode="NoResize" ShowInTaskbar="False" WindowStartupLocation="CenterScreen"> 
+    <Grid Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Box with light grey background for both settings -->
+        <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="2"
+                Background="#FFEFEFEF" CornerRadius="6" Padding="6" Margin="0,0,0,10">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Row="0" Grid.Column="0"
+                       Content="Facade Walls:"
+                       VerticalAlignment="Center" Margin="0,0,10,10"/>
+                <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Vertical"
+                            VerticalAlignment="Center" Margin="0,0,0,10">
+                    <RadioButton x:Name="RadioButtonTrue" Content="Single" GroupName="MultilayerWallGroup"
+                                 IsChecked="True"/>
+                    <RadioButton x:Name="RadioButtonFalse" Content="Multiple" GroupName="MultilayerWallGroup"
+                                 IsChecked="False"/>
+                </StackPanel>
+
+                <Label Grid.Row="1" Grid.Column="0"
+                       Content="Windows Glass Transmission:"
+                       VerticalAlignment="Center" Margin="0,0,10,0"/>
+                <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal"
+                            VerticalAlignment="Center" Margin="0,0,0,0">
+                    <TextBox x:Name="TextBoxTransmission" Width="60" Text="70"
+                             VerticalAlignment="Center"/>
+                    <Label Content="%" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                </StackPanel>
+
+                <Label Grid.Row="2" Grid.Column="0"
+                        Content="Building Ground Floor:"
+                        VerticalAlignment="Center" Margin="0,0,10,0"/>
+                <ComboBox x:Name="ComboBoxLevels"
+                        Grid.Row="2" Grid.Column="1"
+                        Width="180"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Left"
+                        DisplayMemberPath="Name"
+                        SelectedValuePath="Id"/>
+            </Grid>
+        </Border>
+
+        <!-- Save button remains centered below the box -->
+        <Button x:Name="SaveButton" Content="Save" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
+                HorizontalAlignment="Center" MinWidth="80" Margin="0,10,0,0" Padding="10,3"/>
+    </Grid>
+</Window>
